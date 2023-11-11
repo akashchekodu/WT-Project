@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Name is mandatory"],
+    unique: true,
+    trim: true,
+    maxlength: [40, "A tour name must have less or equal then 40 characters"],
+    minlength: [10, "A tour name must have more or equal then 10 characters"],
   },
   email: {
     type: String,
@@ -78,6 +82,19 @@ userSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
     return JWTTimestamp < changedTimestamp;
   }
   return false;
+};
+
+userSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);
