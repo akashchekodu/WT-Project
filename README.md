@@ -1,6 +1,6 @@
 # WT-Project
 
-#Hosting The Server
+# Hosting The Server
 Clone the repo using ```git clone https://github.com/akashchekodu/WT-Project.git``` or download the zip file and unzip
 then
 ```
@@ -10,12 +10,14 @@ npm start
 ```
 This will start the server in port  7000
 
-#Loading the front-end
+# Loading the Front-End
+(Download the files) 
 
-(Download the files)
 then
 ```
 cd front-end
 npm i
 npm start
 ```
+
+This will start the front-end on port 3000
