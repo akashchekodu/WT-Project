@@ -1,0 +1,245 @@
+.main__header {
+  width: 100vw;
+  height: calc(100vh - 3.49rem);
+  display: grid;
+  place-items: center;
+  margin-top: 3rem;
+}
+
+.main__header-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6rem;
+}
+
+.main__header-left {
+  margin-top: -3rem;
+}
+
+.main__header-left h4 {
+  margin-bottom: 1rem;
+  color: var(--color-secondary);
+  font-weight: 400;
+}
+
+.main__header-left p {
+  margin: 1rem 0 3.5rem;
+  font-size: 1.1rem;
+}
+
+.main__header-right {
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.main__header-circle {
+  width: 25rem;
+  height: 25rem;
+  background: linear-gradient(75deg, var(--color-secondary), transparent);
+  border-radius: 50%;
+  position: absolute;
+  transition: var(--transition);
+  filter: blur(15px);
+}
+
+.main__header-image {
+  position: relative;
+}
+
+.main__header-right:hover .main__header-circle {
+  filter: none;
+}
+
+/******************** PROGRAMS STYLES ********************/
+.programs {
+  margin-top: 4rem;
+}
+
+.program__wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+.programs__program a {
+  margin-top: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.programs__program:hover a {
+  background: var(--color-secondary);
+  color: var(--color-gray-600);
+}
+
+/******************** VALUES STYLES ********************/
+.values__container {
+  display: grid;
+  grid-template-columns: 38% 50%;
+  gap: 12%;
+}
+
+.values__image {
+  filter: saturate(0.25);
+  transition: var(--transition);
+}
+
+.values__image:hover {
+  filter: saturate(1);
+  transition: var(--transition);
+}
+
+.values__right > p {
+  margin: 1.5rem 0 5rem;
+}
+
+.values__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.4rem 2.4rem; /*3.4 for row 2.4 for column*/
+}
+
+.card.values__value {
+  /*.card from index.css UI component*/
+  padding-top: 3.5rem;
+  text-align: left;
+  position: relative;
+}
+
+.card.values__value span {
+  position: absolute;
+  top: -1.5rem;
+}
+
+/******************** FAQ STYLES ********************/
+
+/******************** TESTIMONIAL STYLES ********************/
+
+/******************** FOOTER STYLES ********************/
+
+/******************** MEADIA QUERIES (medium screens) ********************/
+@media screen and (max-width: 1024px) {
+  /* MAIN HEADER */
+  .main__header {
+    height: fit-content;
+    padding: 12rem 0;
+  }
+  .main__header-container {
+    gap: 0;
+  }
+
+  .main__header-circle {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  /* PROGRAMS */
+  .program__wrapper {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* VALUES */
+  .values__container {
+    grid-template-columns: 1fr;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  .values__wrapper {
+    gap: 4rem 3rem;
+  }
+
+  .values__image {
+    display: none;
+  }
+
+  /* FAQs */
+  .faqs__wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials {
+    width: 75%;
+  }
+
+  /* FOOTER */
+  .footer__container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/******************** MEADIA QUERIES (small screens) ********************/
+@media screen and (max-width: 600px) {
+  /* MAIN HEADER */
+  .main__header {
+    margin-top: 0;
+    padding: 12rem 0 0;
+    height: 100vh;
+  }
+
+  .main__header-image,
+  .main__header-circle {
+    display: none;
+  }
+
+  .main__header-container {
+    grid-template-columns: 1fr;
+  }
+
+  /* PROGRAMS */
+  .program__wrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .programs__program {
+    width: 84%;
+    margin: 0 auto;
+  }
+  /* VALUES */
+  .values__wrapper {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .card.values__value {
+    width: 84%;
+    margin: 0 auto; /*margin-inline: auto; does the same work*/
+  }
+
+  /* FAQS */
+  .faqs__wrapper {
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+
+  /* TESTIMONIAL */
+  .testimonials {
+    width: 100%;
+  }
+
+  .footer {
+    margin-top: 7rem;
+  }
+
+  .footer__container {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .footer__container article {
+    align-items: center;
+  }
+
+  .footer__container article p {
+    text-align: center;
+  }
+}

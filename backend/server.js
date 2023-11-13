@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const app = require("./app");
+const https = require("https");
 
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! 💥 Shutting down...");
@@ -12,7 +13,7 @@ const DB = process.env.DATABASE;
 
 mongoose.connect(DB).then(() => console.log("Connected to DB"));
 
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 7000;
 
 const server = app.listen(port, () => {
   console.log(`listening on port ${port}`);

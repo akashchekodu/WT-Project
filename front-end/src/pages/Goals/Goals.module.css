@@ -1,0 +1,15 @@
+/* Goals.module.css */
+
+.goals-container {
+  text-align: center;
+  margin: 20px;
+}
+
+.goals-header {
+  position: absolute;
+  top: 200px;
+  left: 100px;
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}

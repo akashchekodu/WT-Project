@@ -1,0 +1,13 @@
+/* GoalList.module.css */
+
+.goalList {
+  list-style-type: none;
+  padding: 0;
+}
+
+.goalItem {
+  margin-bottom: 8px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}

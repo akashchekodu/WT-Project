@@ -1,0 +1,71 @@
+/* Sidebar.module.css */
+
+.sidebar {
+  width: 240px;
+  height: 100%;
+  background-color: var(--color-primary);
+  color: white;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode */
+.dark-mode .sidebar {
+  background-color: #222;
+  box-shadow: 2px 0px 5px rgba(255, 255, 255, 0.2);
+}
+
+.sidebarLogo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.sidebarList {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.sidebarItem {
+  margin-bottom: 12px;
+}
+
+/* NavLink styles */
+.sidebarLink {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.sidebarLink:hover {
+  background-color: #555;
+}
+
+/* Active link highlight */
+.sidebarLink.active {
+  background-color: #666;
+}
+
+.sidebarIcon {
+  margin-right: 12px;
+}
+
+/* Add icons using a library like Font Awesome */
+.sidebarIcon i {
+  font-size: 18px;
+}
+
+/* Add a subtle hover effect for icons */
+.sidebarIcon:hover {
+  color: #ffc107; /* Change the color to your preference */
+}
