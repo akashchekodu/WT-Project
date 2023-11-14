@@ -3,6 +3,30 @@ import styles from "./../authentication.module.css";
 import validateEmail from "../../../util/emailValidator";
 import { useNavigate } from "react-router-dom";
 
+const handleSignup = async (user, setError) => {
+  try {
+    const res = await fetch("http://localhost:7000/api/v1/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      const errorData = await res.json(); // Log the response body
+      throw new Error(`${errorData.message}`);
+    }
+
+    const data = await res.json();
+    if (data.status === "success") return data;
+    else throw new Error(`${data.message}`);
+    console.log(data);
+  } catch (err) {
+    setError(err.message);
+  }
+};
+
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,30 +39,6 @@ const SignUp = () => {
 
   const naviigateToLogin = () => {
     navigate("/login");
-  };
-
-  const handleSignup = async (user) => {
-    try {
-      const res = await fetch("http://localhost:7000/api/v1/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-        credentials: "include",
-      });
-      if (!res.ok) {
-        const errorData = await res.json(); // Log the response body
-        throw new Error(`${errorData.message}`);
-      }
-
-      const data = await res.json();
-      if (data.status === "success") return data;
-      else throw new Error(`${data.message}`);
-      console.log(data);
-    } catch (err) {
-      setError(err.message);
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -72,7 +72,7 @@ const SignUp = () => {
       password,
       passwordConfirm: confirmPassword,
     };
-    const data = await handleSignup(user);
+    const data = await handleSignup(user, setError);
     if (data) {
       setConfirmPassword("");
       setEmail("");

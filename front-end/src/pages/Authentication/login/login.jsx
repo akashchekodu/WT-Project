@@ -10,7 +10,34 @@ const Login = () => {
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (user, setError) => {
+    try {
+      const res = await fetch("http://localhost:7000/api/v1/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+        credentials: "include",
+      });
+      if (!res.ok) {
+        const errorData = await res.json(); // Log the response body
+        // throw new Error(`${errorData.message}`);
+        console.log(errorData);
+        throw new Error(`${errorData.message}`);
+      }
+
+      const data = await res.json();
+      console.log(data);
+      if (data.status === "success") return data;
+      else throw new Error(`${data}`);
+    } catch (err) {
+      // console.log(err);
+      setError(err.message);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setError("Please fill in all fields");
@@ -35,14 +62,16 @@ const Login = () => {
     };
 
     // Send data to the backend
+    const data = await handleLogin(user, setError);
+    if (data) {
+      setError("");
+      setPassword("");
+      setUsername("");
+      setIsTermsAccepted(false);
+      navigate("/done"); //Dummy redirection
+    }
 
     // If error received, set error again
-
-    console.log(user);
-    setError("");
-    setPassword("");
-    setUsername("");
-    setIsTermsAccepted(false);
   };
 
   // Function to handle redirection to signup page

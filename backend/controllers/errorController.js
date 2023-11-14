@@ -36,6 +36,7 @@ const sendErrorDev = (err, res) => {
 
 const sendErrorProd = (err, res) => {
   // Operational, trusted error: send message to client
+  console.log(err);
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
@@ -64,15 +65,13 @@ module.exports = (err, req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
-
+    let error = { ...err }; //After destructring the error does not have property message,  You have to manually assign it
+    error.message = err.message;
     if (error.name === "CastError") error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === "ValidationError")
-      error = handleValidationErrorDB(error);
+    if (error.name === "ValidationError") error = handleValidationErrorDB(err);
     if (error.name === "JsonWebTokenError") error = handleJWTError();
     if (error.name === "TokenExpiredError") error = handleJWTExpiredError();
-
     sendErrorProd(error, res);
   }
 };
