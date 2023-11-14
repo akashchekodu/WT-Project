@@ -3,24 +3,62 @@ import styles from "./../authentication.module.css";
 import { useNavigate } from "react-router-dom";
 import validateEmail from "../../../util/emailValidator";
 
+const handleForgotPassword = async (user, setNotification, setLoading) => {
+  try {
+    setLoading(true); // Set loading to true before making the request
+
+    const res = await fetch("http://localhost:7000/api/v1/forgotpassword", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.log(errorData);
+      throw new Error(`${errorData.message}`);
+    }
+
+    const data = await res.json();
+    console.log(data);
+    if (data.status === "success")
+      setNotification({ type: "success", message: data.message });
+    else throw new Error(`${data}`);
+  } catch (err) {
+    setNotification({ type: "error", message: err.message });
+  } finally {
+    setLoading(false); // Set loading to false after the request is completed
+  }
+};
+
 const ForgotPassword = () => {
   const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
+  const [notification, setNotification] = useState(null);
   const [isTermsAccepted, setIsTermsAccepted] = useState(false);
+  const [loading, setLoading] = useState(false); // State to manage loading state
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // If already loading, do nothing
+
+    setNotification(null); // Reset notification state
     if (!username) {
-      setError("Please fill in all fields");
+      setNotification({ type: "error", message: "Please fill in all fields" });
       return;
     }
     if (!isTermsAccepted) {
-      setError("Please accept terms and conditions");
+      setNotification({
+        type: "error",
+        message: "Please accept terms and conditions",
+      });
       return;
     }
     if (!validateEmail(username)) {
-      setError("Enter a valid Email");
+      setNotification({ type: "error", message: "Enter a valid Email" });
       return;
     }
     const user = {
@@ -29,23 +67,16 @@ const ForgotPassword = () => {
 
     // Send data to the backend
 
-    // If error received, set error again
-
-    console.log(user);
-    setError("");
-    setUsername("");
-    setIsTermsAccepted(false);
+    const data = await handleForgotPassword(user, setNotification, setLoading);
+    if (data) {
+      setUsername("");
+      setIsTermsAccepted(false);
+    }
   };
 
-  // Function to handle redirection to signup page
   const redirectToLogin = () => {
-    navigate("/login"); // Use navigate to redirect
+    navigate("/login");
   };
-  // const redirectToSignup = () => {
-  //   props.toggle((prev) => {
-  //     return !prev;
-  //   });
-  // };
 
   return (
     <div className={styles.loginContainer}>
@@ -81,7 +112,15 @@ const ForgotPassword = () => {
           </label>
         </div>
 
-        {error && <p className={styles.errorMessage}>{error}</p>}
+        {loading && <p className={styles.loadingMessage}>Sending mail...</p>}
+
+        {notification && notification.type === "success" && (
+          <p className={styles.successMessage}>{notification.message}</p>
+        )}
+
+        {notification && notification.type === "error" && (
+          <p className={styles.errorMessage}>{notification.message}</p>
+        )}
 
         <button type="submit" className={styles.button}>
           Submit

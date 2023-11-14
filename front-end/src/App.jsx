@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import React from "react";
 import Home from "./pages/home/Home";
 import About from "./pages/about/About";
@@ -41,7 +41,6 @@ const App = () => {
         <Route path="signup" element={<SignUp />} />
         <Route path="forgotpassword" element={<ForgotPassword />} />
         <Route path="resetpassword/:token" element={<ResetPassword />} />
-
         <Route path="sidebar" element={<Sidebar />} />
         <Route path="goals" element={<Goals />} />
         <Route path="dashboard" element={<Dashboard />} />
