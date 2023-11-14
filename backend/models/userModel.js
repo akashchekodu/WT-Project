@@ -7,13 +7,13 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Name is mandatory"],
     trim: true,
-    maxlength: [40, "Name must have less or equal then 40 characters"],
-    minlength: [3, "Name should be minimum of 3 characters"],
+    maxlength: [40, "Name must have less or equal to 40 characters"],
+    minlength: [3, "Name should be a minimum of 3 characters"],
   },
   email: {
     type: String,
     required: [true, "Email is mandatory"],
-    unique: true,
+    unique: true, // Keep this line for email uniqueness
     lowercase: true,
     validate: [validator.isEmail, "Provide a valid email"],
   },
@@ -42,6 +42,8 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 });
+
+userSchema.index({ email: 1 }, { unique: true, sparse: true });
 
 // Encrypting the password before saving to the database
 //Middleware will be called when it's saved

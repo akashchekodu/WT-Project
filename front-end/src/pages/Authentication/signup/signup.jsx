@@ -29,12 +29,12 @@ const SignUp = () => {
       });
       if (!res.ok) {
         const errorData = await res.json(); // Log the response body
-        throw new Error(
-          `HTTP error! Status: ${res.status}, Message: ${errorData.message}`
-        );
+        throw new Error(`${errorData.message}`);
       }
 
       const data = await res.json();
+      if (data.status === "success") return data;
+      else throw new Error(`${data.message}`);
       console.log(data);
     } catch (err) {
       setError(err.message);
@@ -61,10 +61,10 @@ const SignUp = () => {
       return;
     }
 
-    // if (password !== confirmPassword) {
-    //   setError("Passwords do not match");
-    //   return;
-    // }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     const user = {
       name,
@@ -72,16 +72,17 @@ const SignUp = () => {
       password,
       passwordConfirm: confirmPassword,
     };
-    await handleSignup(user);
-
+    const data = await handleSignup(user);
+    if (data) {
+      setConfirmPassword("");
+      setEmail("");
+      setPassword("");
+      setIsTermsAccepted("");
+      setName("");
+      setError("");
+      navigate("/dashboard");
+    }
     // Reset error state after successful submission
-
-    setConfirmPassword("");
-    setEmail("");
-    setPassword("");
-    setIsTermsAccepted("");
-    setName("");
-    setError("");
   };
 
   return (
