@@ -16,16 +16,17 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import ResetPassword from "./pages/Authentication/resetPassword/ResetPassword";
 import Goals from "./pages/Goals/Goal";
 import Sidebar from "./pages/Sidebar/SideBar";
-import { sideBar } from "./data";
+import GoalsPage from "./pages/Goals/GoalsPage";
 
 const App = () => {
-  const { pathname } = useLocation();
+  let { pathname } = useLocation();
+  pathname = pathname.toLocaleLowerCase();
   const isLoginPage =
     pathname === "/login" ||
     pathname === "/signup" ||
     pathname === "/forgotpassword" ||
     pathname === "/dashboard" ||
-    pathname.startsWith("/resetpassword") ||
+    pathname.toLocaleLowerCase().startsWith("/resetpassword") ||
     pathname.startsWith("/goals") ||
     pathname.startsWith("/side");
   return (
@@ -42,7 +43,8 @@ const App = () => {
         <Route path="forgotpassword" element={<ForgotPassword />} />
         <Route path="resetpassword/:token" element={<ResetPassword />} />
         <Route path="sidebar" element={<Sidebar />} />
-        <Route path="goals" element={<Goals />} />
+        <Route path="goals" element={<GoalsPage />} />
+
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

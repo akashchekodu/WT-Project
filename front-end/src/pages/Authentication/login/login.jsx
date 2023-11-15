@@ -68,7 +68,7 @@ const Login = () => {
       setPassword("");
       setUsername("");
       setIsTermsAccepted(false);
-      navigate("/done"); //Dummy redirection
+      navigate("/done"); //Dummy redirec
     }
 
     // If error received, set error again

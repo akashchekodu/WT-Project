@@ -1,24 +1,27 @@
-import React, { useState } from "react";
-import GoalForm from "./GoalForm";
-import GoalList from "./GoalList";
-import styles from "./Goals.module.css"; // Import the CSS module
+// Goal.js
+import React from "react";
+import styles from "./Goal.module.css";
 
-const Goals = () => {
-  const [goals, setGoals] = useState([]);
-
-  const addGoal = (newGoal) => {
-    setGoals([...goals, newGoal]);
-  };
+const Goal = ({ markAsDone, id, goal, markAsRead, deleteGoal }) => {
+  if (!goal) {
+    return null;
+  }
+  console.log(markAsDone);
 
   return (
-    <div className={styles.goalsContainer}>
-      {" "}
-      {/* Use the styles from the module */}
-      <h1 className={styles.goalsHeader}>Goal Tracker</h1>
-      <GoalForm addGoal={addGoal} />
-      <GoalList goals={goals} />
+    <div className={`${styles.goal} ${markAsDone ? styles.read : ""}`}>
+      <span className={styles.markAsRead}>
+        {" "}
+        <p>{goal}</p>
+      </span>
+      <div className={styles.icons}>
+        <span onClick={() => markAsRead(id, markAsDone)}>&#10003;</span>
+        <span className={styles.delete} onClick={() => deleteGoal(id)}>
+          &#10007;
+        </span>
+      </div>
     </div>
   );
 };
 
-export default Goals;
+export default Goal;

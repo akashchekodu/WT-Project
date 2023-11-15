@@ -1,9 +1,9 @@
-/* GoalList.module.css */
-.goalList {
+.summaryContainer {
   padding: 20px;
   border-radius: 8px;
   width: 50vw;
   background: var(--color-primary);
+  margin-bottom: 1.7rem;
 }
 
 h3 {

@@ -1,14 +1,23 @@
-// GoalList.jsx
-
+// GoalList.js
 import React from "react";
+import Goal from "./Goal";
+import styles from "./GoalList.module.css";
 
-const GoalList = ({ goals }) => {
+const GoalList = ({ goals, markAsDoneFun, deleteGoal }) => {
   return (
-    <ul>
-      {goals.map((goal, index) => (
-        <li key={index}>{goal}</li>
+    <div className={styles.goalList}>
+      <h3>Your Goals:</h3>
+      {goals.map((goal) => (
+        <Goal
+          id={goal._id}
+          key={goal._id}
+          goal={goal.goal}
+          markAsDone={goal.markedAsDone}
+          markAsRead={markAsDoneFun}
+          deleteGoal={deleteGoal}
+        />
       ))}
-    </ul>
+    </div>
   );
 };
 

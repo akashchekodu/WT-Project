@@ -1,18 +1,28 @@
-/* GoalForm.module.css */
-
+/* // GoalForm.module.css */
 .goalForm {
   margin-bottom: 20px;
 }
 
+.form {
+  display: flex;
+  justify-content: space-between;
+}
+
 .input {
-  padding: 8px;
-  margin-right: 8px;
+  color: aliceblue;
+  flex: 1 1;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 3px;
+  margin-right: 1rem;
+  width: 35vw;
+  background-color: var(--color-primary);
 }
 
 .button {
-  padding: 8px 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
+  padding: 10px;
+  font-size: 16px;
   cursor: pointer;
+  background-color: rgb(187, 56, 187);
+  border-radius: 3px;
 }

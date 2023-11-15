@@ -8,6 +8,11 @@ const goalSchema = new mongoose.Schema(
       maxlength: [40, "A tour name must have less or equal then 40 characters"],
       trim: true,
     },
+    markedAsDone: {
+      type: Boolean,
+      required: [true, "Mark As Done is required"],
+      default: false,
+    },
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -16,10 +21,11 @@ const goalSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
-      required: [true, "Goal must belong to a user"],
+      // required: [true, "Goal must belong to a user"],
     },
   },
   {
+    versionKey: false,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }

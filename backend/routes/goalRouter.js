@@ -5,15 +5,16 @@ const {
   deleteGoal,
   updateGoal,
   createGoal,
-  setTourUserIds,
+  setGoalUserId,
 } = require("../controllers/goalControllers");
 const { protect } = require("../controllers/authController");
 
 const goalRouter = express.Router();
 
-goalRouter.use(protect);
+// goalRouter.use(protect);
 
-goalRouter.route("/").get(getAll).post(setTourUserIds, createGoal);
+// goalRouter.route("/").get(getAll).post(setGoalUserId, createGoal);
+goalRouter.route("/").get(getAll).post(createGoal);
 goalRouter.route("/:id").delete(deleteGoal).patch(updateGoal);
 
 module.exports = goalRouter;
