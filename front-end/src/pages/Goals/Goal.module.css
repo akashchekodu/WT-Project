@@ -9,6 +9,11 @@
   background: #121212;
 }
 
+h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 .read p {
   text-decoration: line-through;
 }

@@ -17,18 +17,20 @@ import ResetPassword from "./pages/Authentication/resetPassword/ResetPassword";
 import Goals from "./pages/Goals/Goal";
 import Sidebar from "./pages/Sidebar/SideBar";
 import GoalsPage from "./pages/Goals/GoalsPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   let { pathname } = useLocation();
-  pathname = pathname.toLocaleLowerCase();
+  const lowerpathname = pathname.toLocaleLowerCase();
   const isLoginPage =
-    pathname === "/login" ||
-    pathname === "/signup" ||
-    pathname === "/forgotpassword" ||
-    pathname === "/dashboard" ||
-    pathname.toLocaleLowerCase().startsWith("/resetpassword") ||
-    pathname.startsWith("/goals") ||
-    pathname.startsWith("/side");
+    lowerpathname === "/login" ||
+    lowerpathname === "/signup" ||
+    lowerpathname === "/forgotpassword" ||
+    lowerpathname === "/dashboard" ||
+    lowerpathname.toLocaleLowerCase().startsWith("/resetpassword") ||
+    lowerpathname.startsWith("/goals") ||
+    lowerpathname.startsWith("/side");
+
   return (
     <>
       <Navbar />
@@ -42,12 +44,28 @@ const App = () => {
         <Route path="signup" element={<SignUp />} />
         <Route path="forgotpassword" element={<ForgotPassword />} />
         <Route path="resetpassword/:token" element={<ResetPassword />} />
-        <Route path="sidebar" element={<Sidebar />} />
-        <Route path="goals" element={<GoalsPage />} />
 
-        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="sidebar" element={<Sidebar />} />
+        <Route
+          path="goals"
+          element={
+            <ProtectedRoute>
+              <GoalsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
+
       {!isLoginPage && <Footer />}
     </>
   );

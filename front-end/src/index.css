@@ -9,6 +9,13 @@
   text-decoration: none;
   box-sizing: border-box;
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
 /* CSS Global variable starts with :root {...} check w3school docs for more  info */
 :root {

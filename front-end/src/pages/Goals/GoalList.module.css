@@ -1,9 +1,13 @@
 /* GoalList.module.css */
 .goalList {
+  box-sizing: border-box;
   padding: 20px;
   border-radius: 8px;
   width: 50vw;
   background: var(--color-primary);
+  overflow: scroll;
+  overflow-x: hidden;
+  min-height: 60dvh;
 }
 
 h3 {
