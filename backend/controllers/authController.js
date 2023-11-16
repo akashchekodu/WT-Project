@@ -16,7 +16,8 @@ const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
   const cookieOptions = {
     maxAge: 2 * 60 * 60 * 1000,
-    httpOnly: true,
+    // httpOnly: true,
+    // httpOnly: false,
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
 
@@ -60,11 +61,12 @@ const login = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
+
 const protect = catchAsync(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearere")
+    req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
   }

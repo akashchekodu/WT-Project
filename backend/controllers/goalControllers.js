@@ -5,18 +5,36 @@ const catchAsync = require("../utils/catchAsync");
 const mongoose = require("mongoose");
 
 const setGoalUserId = (req, res, next) => {
+  // console.log("HEREEEEEEEEEEEE");
   if (req.user.id) {
+    // console.log(req.body.user);
     req.body.user = req.user.id;
+  }
+  next();
+};
+
+const setUserId = (req, res, next) => {
+  console.log(req.user._id); //65558df2f40ac4572fb976bd
+  const { id } = req.user;
+  console.log(id);
+  if (id) {
+    req.params.user = id;
   }
   next();
 };
 
 const getAll = catchAsync(async (req, res, next) => {
   let filter = {};
+  // console.log(req.params);
   if (req.params.user) {
     filter = { user: req.params.user };
   }
-  const features = new APIFeatures(Goal.find(), req.query).sort().limitFields();
+
+  console.log(req.query);
+  const features = new APIFeatures(Goal.find(), filter)
+    .filter()
+    .sort()
+    .limitFields();
 
   const goals = await features.query;
 
@@ -76,4 +94,11 @@ const createGoal = catchAsync(async (req, res, next) => {
   });
 });
 
-module.exports = { getAll, deleteGoal, updateGoal, setGoalUserId, createGoal };
+module.exports = {
+  getAll,
+  deleteGoal,
+  updateGoal,
+  setGoalUserId,
+  createGoal,
+  setUserId,
+};

@@ -6,7 +6,7 @@ const Goal = ({ markAsDone, id, goal, markAsRead, deleteGoal }) => {
   if (!goal) {
     return null;
   }
-  console.log(markAsDone);
+  // console.log(markAsDone);
 
   return (
     <div className={`${styles.goal} ${markAsDone ? styles.read : ""}`}>

@@ -4,13 +4,18 @@ import GoalForm from "./GoalForm";
 import GoalList from "./GoalList";
 import styles from "./GoalsPage.module.css";
 import GoalsSummary from "./GoalsSummary";
+import getUserToken from "../../util/getUserToken";
 
 const fetchData = async (setGoals, setError) => {
   try {
+    const token = getUserToken();
+    // console.log(token);
+
     const response = await fetch("http://localhost:7000/api/v1/goals", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -29,11 +34,14 @@ const fetchData = async (setGoals, setError) => {
 };
 
 const addGoal = async (setGoals, setError, newGoal) => {
+  const token = getUserToken();
+
   try {
     const res = await fetch("http://localhost:7000/api/v1/goals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newGoal),
     });
@@ -44,6 +52,7 @@ const addGoal = async (setGoals, setError, newGoal) => {
     const data = await res.json();
     // console.log(data);
     if (data.status === "success") {
+      console.log(data.goal);
       setGoals((prevGoals) => {
         return [data.goal, ...prevGoals];
       });
@@ -57,10 +66,13 @@ const addGoal = async (setGoals, setError, newGoal) => {
 
 const markAsDoneFun = async (setGoals, setError, goalId, currentState) => {
   try {
+    const token = getUserToken();
+
     const res = await fetch(`http://localhost:7000/api/v1/goals/${goalId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ markedAsDone: !currentState }),
     });
@@ -85,11 +97,14 @@ const markAsDoneFun = async (setGoals, setError, goalId, currentState) => {
 };
 
 const deleteGoal = async (setGoals, setError, goalId) => {
+  const token = getUserToken();
+
   try {
     const res = await fetch(`http://localhost:7000/api/v1/goals/${goalId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log("ONe");
