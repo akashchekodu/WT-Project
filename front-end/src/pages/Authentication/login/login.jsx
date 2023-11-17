@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./../authentication.module.css"; // Import styles from the CSS module
 import validateEmail from "../../../util/emailValidator";
+import { connect } from "react-redux";
+import { loginUser } from "../../../actions/authActions";
 
-const Login = () => {
+const Login = ({ dispatchLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -63,11 +65,13 @@ const Login = () => {
 
     // Send data to the backend
     const data = await handleLogin(user, setError);
+    console.log(data);
     if (data) {
       setError("");
       setPassword("");
       setUsername("");
       setIsTermsAccepted(false);
+      dispatchLogin(data.user);
       navigate("/dashboard"); //Dummy redirect
     }
 
@@ -78,12 +82,6 @@ const Login = () => {
   const redirectToSignup = () => {
     navigate("/signup"); // Use navigate to redirect
   };
-  // const redirectToSignup = () => {
-  //   props.toggle((prev) => {
-  //     return !prev;
-  //   });
-  // };
-
   const redirecToForgotPassword = () => {
     navigate("/forgotpassword");
   };
@@ -161,4 +159,10 @@ const Login = () => {
   );
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchLogin: (user) => dispatch(loginUser(user)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Login);

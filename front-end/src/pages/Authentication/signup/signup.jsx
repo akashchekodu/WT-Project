@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import styles from "./../authentication.module.css";
 import validateEmail from "../../../util/emailValidator";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import { signupUser } from "../../../actions/authActions";
 
-const handleSignup = async (user, setError) => {
+const handleSignup = async (user, setError, dispatchSignup, navigate) => {
   try {
     const res = await fetch("http://localhost:7000/api/v1/signup", {
       method: "POST",
@@ -14,20 +16,25 @@ const handleSignup = async (user, setError) => {
       credentials: "include",
     });
     if (!res.ok) {
-      const errorData = await res.json(); // Log the response body
+      const errorData = await res.json();
       throw new Error(`${errorData.message}`);
     }
 
     const data = await res.json();
-    if (data.status === "success") return data;
-    else throw new Error(`${data.message}`);
-    console.log(data);
+    if (data.status === "success") {
+      // Dispatch the signup action to update the Redux state
+      dispatchSignup(data.user);
+      // Navigate to the dashboard or any other page
+      navigate("/goals");
+    } else {
+      throw new Error(`${data.message}`);
+    }
   } catch (err) {
     setError(err.message);
   }
 };
 
-const SignUp = () => {
+const SignUp = ({ dispatchSignup }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -72,17 +79,17 @@ const SignUp = () => {
       password,
       passwordConfirm: confirmPassword,
     };
-    const data = await handleSignup(user, setError);
-    if (data) {
-      setConfirmPassword("");
-      setEmail("");
-      setPassword("");
-      setIsTermsAccepted("");
-      setName("");
-      setError("");
-      navigate("/dashboard");
-    }
+
+    // Send data to the backend
+    await handleSignup(user, setError, dispatchSignup, navigate);
+
     // Reset error state after successful submission
+    setConfirmPassword("");
+    setEmail("");
+    setPassword("");
+    setIsTermsAccepted("");
+    setName("");
+    setError("");
   };
 
   return (
@@ -169,4 +176,9 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+// Connect the component to Redux
+const mapDispatchToProps = (dispatch) => ({
+  dispatchSignup: (user) => dispatch(signupUser(user)),
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);

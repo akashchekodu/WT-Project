@@ -9,9 +9,15 @@ import { HiOutlineBars3 } from "react-icons/hi2";
 import { MdOutlineClose } from "react-icons/md";
 import "./navbar.css";
 import LoginButton from "./LoginButton";
+import { useSelector } from "react-redux";
+import LogoutButton from "./LogoutButton";
 
 const Navbar = () => {
   const [isNavShowing, setIsNavShowing] = useState(false);
+
+  const authState = useSelector((state) => state.auth);
+
+  const isAuthenticated = authState.isAuthenticated;
 
   const handleNavToggle = () => {
     return setIsNavShowing((prevVAlue) => {
@@ -43,12 +49,13 @@ const Navbar = () => {
             );
           })}
           <li>
-            <LoginButton
-              className={({ isActive }) => (isActive ? "active-nav" : "")}
-              onClick={handleNavToggle}
-            >
-              Login
-            </LoginButton>
+            {isAuthenticated ? (
+              // Show LogoutButton if authenticated
+              <LogoutButton to="/">Logout</LogoutButton>
+            ) : (
+              // Show LoginButton if not authenticated
+              <LoginButton>Login</LoginButton>
+            )}
           </li>
         </ul>
         <button onClick={handleNavToggle} className="nav__toggle-btn">

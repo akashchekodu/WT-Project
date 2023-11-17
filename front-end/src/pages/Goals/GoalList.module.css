@@ -1,4 +1,5 @@
 /* GoalList.module.css */
+
 .goalList {
   box-sizing: border-box;
   padding: 20px;
@@ -7,7 +8,26 @@
   background: var(--color-primary);
   overflow: scroll;
   overflow-x: hidden;
-  min-height: 60dvh;
+  min-height: 60vh;
+
+  /* Styling the scrollbar for WebKit browsers (e.g., Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary); /* Change color as needed */
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--color-tertiary); /* Change color as needed */
+    border-radius: 8px;
+  }
+
+  /* Styling the scrollbar for Firefox and other browsers */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) var(--color-tertiary); /* Change colors as needed */
 }
 
 h3 {
