@@ -7,41 +7,41 @@ import { BsMessenger } from "react-icons/bs";
 import { IoLogoWhatsapp } from "react-icons/io";
 
 const Contact = () => {
-	return (
-		<>
-			<Header title="Gt In Touch" image={HeaderImage}>
-				Eu proident sit culpa laborum ad. Eu proident sit culpa laborum ad.
-			</Header>
+  return (
+    <>
+      <Header title="Get In Touch" image={HeaderImage}>
+        Eu proident sit culpa laborum ad. Eu proident sit culpa laborum ad.
+      </Header>
 
-			<section className="contact">
-				<div className="container contact__container">
-					<div className="contact__wrapper">
-						<a
-							href="mailto:it.eniolaademola@gmail.com"
-							target="_blank"
-							rel="noreferrer noopener"
-						>
-							<MdEmail />
-						</a>
-						<a
-							href="https://www.facebook.com/eniola.ademola.1610/"
-							target="_blank"
-							rel="noreferrer noopener"
-						>
-							<BsMessenger />
-						</a>
-						<a
-							href="https://wa.me/+2347013909098"
-							target="_blank"
-							rel="noreferrer noopener"
-						>
-							<IoLogoWhatsapp />
-						</a>
-					</div>
-				</div>
-			</section>
-		</>
-	);
+      <section className="contact">
+        <div className="container contact__container">
+          <div className="contact__wrapper">
+            <a
+              href="https://www.gmail.com"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <MdEmail />
+            </a>
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <BsMessenger />
+            </a>
+            <a
+              href="https://www.whatsapp.com"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <IoLogoWhatsapp />
+            </a>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 export default Contact;
